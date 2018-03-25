@@ -1,0 +1,13 @@
+--globa
+*.lib
+targetConfigs/
+macros.ini_initial
+version_history.txt
+MSP430F5529.ccxml
+LcdDriver/
+fonts/
+grlib/
+images/
+driverlibHeaders.h
+peripherals.c
+peripherals.h
