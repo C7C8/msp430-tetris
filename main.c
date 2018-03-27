@@ -106,6 +106,13 @@ void displayBoard(){
             }
         }
     }
+
+    //Draw border around the screen, because it looks good
+    block.xMin = HORIZ_OFFSET - 2;
+    block.yMin = VERTI_OFFSET - 2;
+    block.xMax = COLUMNS * (TX_SIZE + 2); //wat? TODO CLEAN THIS GRAPHICS CODE
+    block.yMax = ROWS * TY_SIZE + 6;
+    Graphics_drawRectangle(&g_sContext, &block);
 }
 
 void swDelay(char numLoops)
