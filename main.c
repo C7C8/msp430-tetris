@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include "peripherals.h"
 #include "tetris.h"
+#include "music.h"
 
 /*
  * Tetris code is largely the work of Stephen Brennan (github.com/brenns10). MSP430
@@ -23,10 +24,13 @@ void displayBoard();
 
 void main(void)
 {
+    //Disable watchdog and do cool stuff like configure timer A
     WDTCTL = WDTPW | WDTHOLD;
+
     initLeds();
     configDisplay();
     configKeypad();
+    configMusic();
     Graphics_clearDisplay(&g_sContext);
     Graphics_drawStringCentered(&g_sContext, "MSP430 TETRIS", AUTO_STRING_LENGTH, 48, 15, OPAQUE_TEXT);
     Graphics_drawStringCentered(&g_sContext, "PORT BY C7C8", AUTO_STRING_LENGTH, 48, 30, OPAQUE_TEXT);
@@ -44,6 +48,7 @@ void main(void)
 
         //Main game loop
         tg = tg_create(ROWS, COLUMNS);
+        playMusic();
         while (1){
             tetris_move move = TM_NONE;
             cKey = getKey();
@@ -78,6 +83,7 @@ void main(void)
             Graphics_flushBuffer(&g_sContext);
             swDelay(1);
         }
+        stopMusic();
 
         //Inform the player of their loss
         Graphics_clearDisplay(&g_sContext);
