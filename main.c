@@ -81,7 +81,7 @@ void main(void)
 
         //Inform the player of their loss
         Graphics_clearDisplay(&g_sContext);
-        Graphics_drawStringCentered(&g_sContext, "YOU LOSE", AUTO_STRING_LENGTH, 48, 15, OPAQUE_TEXT);
+        Graphics_drawStringCentered(&g_sContext, "GAME OVER", AUTO_STRING_LENGTH, 48, 15, OPAQUE_TEXT);
         sprintf(res, "SCORE: %d", tg->points);
         Graphics_drawStringCentered(&g_sContext, res, AUTO_STRING_LENGTH, 48, 25, OPAQUE_TEXT);
         Graphics_drawStringCentered(&g_sContext, "PLAY AGAIN? (#)", AUTO_STRING_LENGTH, 48, 50, OPAQUE_TEXT);
