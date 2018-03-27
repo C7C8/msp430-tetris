@@ -121,10 +121,7 @@ typedef struct {
   tetris_block falling;
   tetris_block next;
   tetris_block stored;
-  /*
-    Number of game ticks until the block will move down.
-   */
-  int ticks_till_gravity;
+
   /*
     Number of lines until you advance to the next level.
    */
