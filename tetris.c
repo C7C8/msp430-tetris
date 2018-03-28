@@ -390,7 +390,7 @@ bool tg_tick(tetris_game *obj, tetris_move move)
     return !tg_game_over(obj);
 }
 
-void tg_init(tetris_game *obj, int rows, int cols)
+void tg_init(tetris_game *obj, char* tg_board, int rows, int cols)
 {
     // Initialization logic
     obj->rows = rows;
@@ -407,8 +407,8 @@ void tg_init(tetris_game *obj, int rows, int cols)
     obj->next.loc.col = obj->cols/2 - 2;
 }
 
-tetris_game *tg_create(int rows, int cols)
+tetris_game *tg_create(tetris_game* tg_instance, char* board, int rows, int cols)
 {
-    tg_init(&tg_instance, rows, cols);
-    return &tg_instance;
+    tg_init(tg_instance, board, rows, cols);
+    return tg_instance;
 }

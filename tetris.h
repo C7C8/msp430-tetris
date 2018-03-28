@@ -128,15 +128,10 @@ extern tetris_location TETROMINOS[NUM_TETROMINOS][NUM_ORIENTATIONS][TETRIS];
 
 
 // Data structure manipulation.
-void tg_init(tetris_game *obj, int rows, int cols);
-tetris_game *tg_create(int rows, int cols);
+void tg_init(tetris_game *obj, char* tg_board, int rows, int cols);
+tetris_game *tg_create(tetris_game* tg_instance, char* board, int rows, int cols);
 
 // Public methods not related to memory:
 char tg_get(tetris_game *obj, int row, int col);
 bool tg_check(tetris_game *obj, int row, int col);
 bool tg_tick(tetris_game *obj, tetris_move move);
-void tg_print(tetris_game *obj, FILE *f);
-
-//Globals, replacements for malloc etc, since dynamic memory on an msp430 isn't a good idea
-tetris_game tg_instance;
-char tg_board[ROWS][COLUMNS];
