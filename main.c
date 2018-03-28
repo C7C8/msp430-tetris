@@ -35,6 +35,7 @@ void main(void)
         else
             Graphics_drawString(&g_sContext, "MUSIC(#)?N", AUTO_STRING_LENGTH, 36, 87, true);
         Graphics_flushBuffer(&g_sContext);
+        beepWelcome();
 
         //Process menu selections
         while (true){

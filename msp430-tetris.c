@@ -14,9 +14,7 @@ void tetris(bool music){
     tetris_game* tg = &game;
     char board[ROWS][COLUMNS];
     while (1){
-        BuzzerOn(32);
-        swDelay(1);
-        BuzzerOff();
+        beepStart();
 
         //Main game loop
         tg = tg_create(tg, (char*) board, ROWS, COLUMNS);
@@ -64,9 +62,8 @@ void tetris(bool music){
         Graphics_drawStringCentered(&g_sContext, "PLAY AGAIN? (*)", AUTO_STRING_LENGTH, 48, 50, OPAQUE_TEXT);
         Graphics_drawStringCentered(&g_sContext, "RETURN? (#)", AUTO_STRING_LENGTH, 48, 58, OPAQUE_TEXT);
         Graphics_flushBuffer(&g_sContext);
-        BuzzerOn(256);
-        swDelay(3);
-        BuzzerOff();
+        beepBad();
+
         char selection;
         while (true){
             selection = getKey();
