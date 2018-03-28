@@ -1,6 +1,7 @@
 #pragma once
 #include <msp430.h>
 #include <stdio.h>
+#include <stdbool.h>
 #include "peripherals.h"
 #include "tetris.h"
 #include "common.h"
@@ -14,5 +15,5 @@
 #define HORIZ_OFFSET 20
 #define VERTI_OFFSET 6
 
-void tetris();
+void tetris(bool music);
 static void tetris_displayBoard(tetris_game* tg);

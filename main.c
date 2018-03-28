@@ -21,6 +21,6 @@ void main(void)
     configKeypad();
     configMusic();
     Graphics_clearDisplay(&g_sContext);
-    tetris();
+    tetris(false);
 }
 

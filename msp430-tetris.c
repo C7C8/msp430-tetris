@@ -1,6 +1,6 @@
 #include "msp430-tetris.h"
 
-void tetris(){
+void tetris(bool music){
     Graphics_drawStringCentered(&g_sContext, "MSP430 TETRIS", AUTO_STRING_LENGTH, 48, 15, OPAQUE_TEXT);
     Graphics_drawStringCentered(&g_sContext, "PORT BY C7C8", AUTO_STRING_LENGTH, 48, 30, OPAQUE_TEXT);
     Graphics_drawStringCentered(&g_sContext, "PRESS # TO PLAY", AUTO_STRING_LENGTH, 48, 60, OPAQUE_TEXT);
@@ -19,7 +19,8 @@ void tetris(){
 
         //Main game loop
         tg = tg_create(tg, (char*) board, ROWS, COLUMNS);
-        playMusic();
+        if (music)
+            playMusic();
         while (1){
             tetris_move move = TM_NONE;
             cKey = getKey();
