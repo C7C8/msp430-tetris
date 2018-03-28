@@ -1,11 +1,12 @@
 #include "msp430-tetris.h"
 
 void tetris(bool music){
+    Graphics_clearDisplay(&g_sContext);
     Graphics_drawStringCentered(&g_sContext, "MSP430 TETRIS", AUTO_STRING_LENGTH, 48, 15, OPAQUE_TEXT);
     Graphics_drawStringCentered(&g_sContext, "PORT BY C7C8", AUTO_STRING_LENGTH, 48, 30, OPAQUE_TEXT);
-    Graphics_drawStringCentered(&g_sContext, "PRESS # TO PLAY", AUTO_STRING_LENGTH, 48, 60, OPAQUE_TEXT);
+    Graphics_drawStringCentered(&g_sContext, "PRESS * TO PLAY", AUTO_STRING_LENGTH, 48, 60, OPAQUE_TEXT);
     Graphics_flushBuffer(&g_sContext);
-    while (getKey() != '#') {}
+    while (getKey() != '*') {}
 
     unsigned char cKey = 'a';
     char res[50];
@@ -60,12 +61,20 @@ void tetris(bool music){
         Graphics_drawStringCentered(&g_sContext, "GAME OVER", AUTO_STRING_LENGTH, 48, 15, OPAQUE_TEXT);
         sprintf(res, "SCORE: %d", tg->points);
         Graphics_drawStringCentered(&g_sContext, res, AUTO_STRING_LENGTH, 48, 25, OPAQUE_TEXT);
-        Graphics_drawStringCentered(&g_sContext, "PLAY AGAIN? (#)", AUTO_STRING_LENGTH, 48, 50, OPAQUE_TEXT);
+        Graphics_drawStringCentered(&g_sContext, "PLAY AGAIN? (*)", AUTO_STRING_LENGTH, 48, 50, OPAQUE_TEXT);
+        Graphics_drawStringCentered(&g_sContext, "RETURN? (#)", AUTO_STRING_LENGTH, 48, 58, OPAQUE_TEXT);
         Graphics_flushBuffer(&g_sContext);
         BuzzerOn(256);
         swDelay(3);
         BuzzerOff();
-        while (getKey() != '#') {}
+        char selection;
+        while (true){
+            selection = getKey();
+            if (selection == '*')
+                break;
+            else if (selection == '#')
+                return;
+        }
     }
 }
 
