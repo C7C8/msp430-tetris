@@ -54,12 +54,6 @@
 #define NUM_ORIENTATIONS 4
 
 /*
-  Level constants.
- */
-#define MAX_LEVEL 19
-#define LINES_PER_LEVEL 10
-
-/*
   A "cell" is a 1x1 block within a tetris board.
  */
 typedef enum {
@@ -113,7 +107,6 @@ typedef struct {
     Scoring information:
    */
   int points;
-  int level;
   /*
     Falling block is the one currently going down.  Next block is the one that
     will be falling after this one.  Stored is the block that you can swap out.
@@ -122,10 +115,6 @@ typedef struct {
   tetris_block next;
   tetris_block stored;
 
-  /*
-    Number of lines until you advance to the next level.
-   */
-  int lines_remaining;
 } tetris_game;
 
 /*
@@ -137,11 +126,6 @@ typedef struct {
  */
 extern tetris_location TETROMINOS[NUM_TETROMINOS][NUM_ORIENTATIONS][TETRIS];
 
-/*
-  This array tells you how many ticks per gravity by level.  Decreases as level
-  increases, to add difficulty.
- */
-extern int GRAVITY_LEVEL[MAX_LEVEL+1];
 
 // Data structure manipulation.
 void tg_init(tetris_game *obj, int rows, int cols);

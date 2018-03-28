@@ -5,7 +5,7 @@
 #include "music.h"
 
 /*
- * Tetris code is largely the work of Stephen Brennan (github.com/brenns10). MSP430
+ * Tetris code (tetris.c/h is largely the work of Stephen Brennan (github.com/brenns10). MSP430
  * port created by C7C8 using the libraries provided by ECE2049 at Worcester Polytechnic
  * Institute.
  */
@@ -78,8 +78,6 @@ void main(void)
             char res[10];
             sprintf(res, "S:%d", tg->points);
             Graphics_drawStringCentered(&g_sContext, res, AUTO_STRING_LENGTH, 75, 5, OPAQUE_TEXT);
-            sprintf(res, "L:%d", tg->level);
-            Graphics_drawStringCentered(&g_sContext, res, AUTO_STRING_LENGTH, 75, 15, OPAQUE_TEXT);
             Graphics_flushBuffer(&g_sContext);
             swDelay(1);
         }
