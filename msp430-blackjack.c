@@ -1,6 +1,6 @@
 #include "msp430-blackjack.h"
 
-char* CardsLookup[] = {"  ", "CA", "C2", "C3", "C4", "C5", "C6", "C7", "C8", "C9", "CA", "CJ", "CQ", "CK", //CA instead of C10 because 1) consistency in sizing, and 2) hex.
+const char* CardsLookup[] = {"  ", "CA", "C2", "C3", "C4", "C5", "C6", "C7", "C8", "C9", "CA", "CJ", "CQ", "CK", //CA instead of C10 because 1) consistency in sizing, and 2) hex.
                        "DA", "D2", "D3", "D4", "D5", "D6", "D7", "D8", "D9", "DA", "DJ", "DQ", "DK",
                        "HA", "H2", "H3", "H4", "H5", "H6", "H7", "H8", "H9", "HA", "HJ", "HQ", "HK",
                        "SA", "S2", "S3", "S4", "S5", "S6", "S7", "S8", "S9", "SA", "SJ", "SQ", "SK",
@@ -54,9 +54,9 @@ void blackjack(bool music){
     //Shuffle deck by first arranging it in complete order, then performing swap
     Cards deck[52];
     for (int i = 1; i <= 52; i++)
-        deck[i] = i;
+        deck[i] = NA;
     { //No, this isn't an accident, I really do mean to create a new scope here! I don't want to waste any more RAM than I have to!
-        Cards temp = 0;
+        Cards temp = NA;
         unsigned char loc1 = 0, loc2 = 0;
         for (int i = 0; i < SHUFFLE_ROUNDS; i++) {
             loc1 = rand() % 52;
@@ -67,7 +67,8 @@ void blackjack(bool music){
         }
     }
 
-    Card playerHand[7] = {NA}, Card mspHand[7] = {NA}; //Max hand is 7, since 1+2+3+4+5+6=21
+    Cards playerHand[7] = {NA};
+    Cards mspHand[7] = {NA}; //Max hand is 7, since 1+2+3+4+5+6=21
     //Deal two cards to each player, replacing the formerly occupied deck slots with NA (empty)
     playerHand[0] = deck[0];
     playerHand[1] = deck[1];
@@ -76,7 +77,28 @@ void blackjack(bool music){
     for (int i = 0; i < 4; i++)
         deck[i] = NA;
 
+    unsigned char deckPos = 4; //keep track of what the next card to draw is
+    unsigned char playerCards = 2, mspCards = 2; //keep track of how many cards each player hsa
+    char res[50] = {'0'}; //generic buffer for use with printf
 
+    CLRSCR;
+    WCENTR("CARDS/BET", 15);
 
     return;
+}
+
+//Get a string that represents the hand given to it; assumes hands are NA-terminated.
+static void getPlayerCardString(Cards* hand, char* buf, int n){
+    memset(buf, '\0', n);
+    for (int i = 0; hand[i] != NA; i++){
+        strncat(buf, CardsLookup[hand[i]], n);
+    }
+}
+
+//Like getPlayerCardString(), but the last two characters are XX'd
+static void getMSPCardString(Cards* hand, char* buf, int n){
+    getPlayerCardString(hand, buf, n);
+    int length = strlen(buf);
+    buf[length-1] = 'X';
+    buf[length-2] = 'X';
 }
