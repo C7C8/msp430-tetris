@@ -54,7 +54,7 @@ void blackjack(bool music){
     //Shuffle deck by first arranging it in complete order, then performing swap
     Cards deck[52];
     for (int i = 1; i <= 52; i++)
-        deck[i] = NA;
+        deck[i] = i;
     { //No, this isn't an accident, I really do mean to create a new scope here! I don't want to waste any more RAM than I have to!
         Cards temp = NA;
         unsigned char loc1 = 0, loc2 = 0;
@@ -81,8 +81,47 @@ void blackjack(bool music){
     unsigned char playerCards = 2, mspCards = 2; //keep track of how many cards each player hsa
     char res[50] = {'0'}; //generic buffer for use with printf
 
-    CLRSCR;
-    WCENTR("CARDS/BET", 15);
+    //Main game loop
+    unsigned char playerBet = 0;
+    unsigned char mspBet = 0;
+    while (1) {
+
+        //Display cards, get the player's bet
+        CLRSCR;
+        WCENTR("CARDS/BET", 15);
+        sprintf(res, "PLAYER (%d): ", getHandValue(playerHand));
+        WLEFT(res, 23);
+        getPlayerCardString(playerHand, res, 50);
+        WLEFT(res, 31);
+        WLEFT("MSP:", 41);
+        getMSPCardString(mspHand, res, 50);
+        WLEFT(res, 49);
+        WCENTR("BET (1,2,4,8)", 62);
+        DRWSCR;
+
+        mspBet += getMSPBet(mspHand);
+        while (1){
+            char bet = getKey();
+            if (bet == '1' || bet == '2' || bet == '4' || bet == '8'){
+                bet -= '0';
+                setLeds(bet);
+                BuzzerOn(bet + 5);
+                DELAY_NOTE;
+                BuzzerOff();
+                playerBet += bet;
+                break;
+            }
+        }
+
+        CLRSCR;
+        WCENTR("HIT/HOLD", 15);
+        sprintf(res, "YOUR BET: %d", playerBet);
+        WLEFT(res, 23);
+        sprintf(res, "MSP BET: %d", mspBet);
+        WLEFT(res, 31);
+        WCENTR("PRESS * TO MATCH", 40);
+        WCENTR("& HIT OR # TO HOLD");
+    }
 
     return;
 }
@@ -102,3 +141,42 @@ static void getMSPCardString(Cards* hand, char* buf, int n){
     buf[length-1] = 'X';
     buf[length-2] = 'X';
 }
+
+//Gets the value of a player's hand. Number cards' value is defined by their number; face cards are all 11; an ace
+//is interpreted optimistically, i.e. 11 if it can fit, 1 otherwise.
+static unsigned char getHandValue(Cards* hand){
+    unsigned char value = 0;
+    //First pass: face cards/number cards
+    for (int i = 0; hand[i] != NA; i++){
+        Cards card = hand[i];
+        if (IS_NUM(card))
+            value += card % 13;
+        else if (IS_FAC(card))
+            value += 11;
+    }
+
+    //Second pass, aces, but optimistically
+    for (int i = 0; hand[i] != NA; i++){
+        if (IS_ACE(hand[i])){
+            if (value <= 10)
+                value += 11;
+            else
+                value += 1;
+        }
+    }
+
+    return value;
+}
+
+//Get the MSP's bet. Do these betting rules make sense? NO IDEA!
+static unsigned char getMSPBet(Cards* hand){
+    unsigned char value = getHandValue(hand);
+    if (value >= 18)
+        return 8;
+    else if (value >= 14)
+        return 4;
+    else if (value >= 7)
+        return 2;
+    return 1;
+}
+
