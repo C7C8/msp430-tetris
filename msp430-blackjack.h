@@ -25,3 +25,4 @@ void blackjack(bool music);
 static void getPlayerCardString(Cards* hand, char* buf, int n);
 static void getMSPCardString(Cards* hand, char* buf, int n);
 static unsigned char getHandValue(Cards* hand);
+static unsigned char getMSPBet(Cards* hand);

@@ -67,8 +67,8 @@ void blackjack(bool music){
         }
     }
 
-    Cards playerHand[7] = {NA};
-    Cards mspHand[7] = {NA}; //Max hand is 7, since 1+2+3+4+5+6=21
+    Cards playerHand[11] = {NA};
+    Cards mspHand[11] = {NA}; //Max hand size is 11
     //Deal two cards to each player, replacing the formerly occupied deck slots with NA (empty)
     playerHand[0] = deck[0];
     playerHand[1] = deck[1];
@@ -119,8 +119,64 @@ void blackjack(bool music){
         WLEFT(res, 23);
         sprintf(res, "MSP BET: %d", mspBet);
         WLEFT(res, 31);
-        WCENTR("PRESS * TO MATCH", 40);
-        WCENTR("& HIT OR # TO HOLD");
+        WCENTR("PRESS * TO MATCH", 45);
+        WCENTR("& HIT OR # TO HOLD", 53);
+        DRWSCR;
+        bool hold = false;
+        while (1){
+            char input = getKey();
+            if (input != '*' && input != '#')
+                continue;
+
+            if (input == '*'){
+                //Match bet and draw another card
+                playerBet = (mspBet > playerBet ? mspBet : playerBet); //just in case?
+                playerHand[playerCards++] = deck[deckPos++];
+            }
+            else
+                hold = true;
+
+            break;
+        }
+
+        //MSP will always decide whether to draw, even if the player holds. This is based solely
+        //on the value of its hand.
+        if (getHandValue(mspHand) < 17)
+            mspHand[mspCards++] = deck[deckPos++];
+        else
+            hold = true;
+
+        //End game scenarios
+        //Case 1: Either player has held
+        CLRSCR;
+        unsigned char playerFinalVal = getHandValue(playerHand);
+        unsigned char mspFinalVal = getHandValue(mspHand);
+        if (hold || playerFinalVal > 21 || mspFinalVal > 21)
+        {
+            if (hold)
+                WCENTR("GAME OVER (HOLD)", 15);
+            else
+                WCENTR("GAME OVER (BUST)", 15);
+            if ((playerFinalVal > mspFinalVal && playerFinalVal <= 21) || mspFinalVal > 21)
+                sprintf(res, "WINNER: PLR (%d)", playerBet + mspBet);
+            else
+                strncat(res, "WINNER: MSP (%d)", playerBet + mspBet);
+
+            WCENTR(res, 23);
+            sprintf(res, "PLAYER (%d):", playerFinalVal);
+            WLEFT(res, 31);
+            getPlayerCardString(playerHand, res, 50);
+            WLEFT(res, 39);
+            sprintf(res, "MSP (%d):", mspFinalVal);
+            WLEFT(res, 49);
+            getPlayerCardString(mspHand, res, 50);
+            WLEFT(res, 57);
+            WCENTR("* TO CONTINUE", 80);
+            DRWSCR;
+
+            while (getKey() != '*');
+            break;
+        }
     }
 
     return;
