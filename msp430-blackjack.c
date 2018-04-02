@@ -119,8 +119,8 @@ void blackjack(bool music){
         WLEFT(res, 23);
         sprintf(res, "MSP BET: %d", mspBet);
         WLEFT(res, 31);
-        WCENTR("PRESS * TO MATCH", 45);
-        WCENTR("& HIT OR # TO HOLD", 53);
+        WCENTR("PRESS * TO HIT", 45);
+        WCENTR("OR # TO HOLD", 53);
         DRWSCR;
         bool hold = false;
         while (1){
@@ -138,6 +138,7 @@ void blackjack(bool music){
 
             break;
         }
+        setLeds(0);
 
         //MSP will always decide whether to draw, even if the player holds. This is based solely
         //on the value of its hand.
@@ -157,10 +158,13 @@ void blackjack(bool music){
                 WCENTR("GAME OVER (HOLD)", 15);
             else
                 WCENTR("GAME OVER (BUST)", 15);
-            if ((playerFinalVal > mspFinalVal && playerFinalVal <= 21) || mspFinalVal > 21)
+            bool playerWon = false;
+            if ((playerFinalVal > mspFinalVal && playerFinalVal <= 21) || mspFinalVal > 21){
                 sprintf(res, "WINNER: PLR (%d)", playerBet + mspBet);
+                playerWon = true;
+            }
             else
-                strncat(res, "WINNER: MSP (%d)", playerBet + mspBet);
+                sprintf(res, "WINNER: MSP (%d)", playerBet + mspBet);
 
             WCENTR(res, 23);
             sprintf(res, "PLAYER (%d):", playerFinalVal);
@@ -173,6 +177,10 @@ void blackjack(bool music){
             WLEFT(res, 57);
             WCENTR("* TO CONTINUE", 80);
             DRWSCR;
+            if (playerWon)
+                beepVictory();
+            else
+                beepBad();
 
             while (getKey() != '*');
             break;

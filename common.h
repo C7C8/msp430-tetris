@@ -14,3 +14,4 @@ void swDelay(int loops);
 void beepWelcome();
 void beepStart();
 void beepBad();
+void beepVictory();

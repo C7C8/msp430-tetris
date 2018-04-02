@@ -41,3 +41,28 @@ inline void beepBad(){
     swDelay(4);
     BuzzerOff();
 }
+
+inline void beepVictory(){
+    BuzzerOn(64);
+    swDelay(1);
+    BuzzerOff();
+    DELAY_NOTE;
+    BuzzerOn(64);
+    for (volatile int i = 0; i < 10000; i++);
+    BuzzerOff();
+    DELAY_NOTE;
+    BuzzerOn(32);
+    swDelay(4);
+    BuzzerOff();
+    DELAY_NOTE;
+    BuzzerOn(32);
+    swDelay(1);
+    BuzzerOff();
+    DELAY_NOTE;
+    BuzzerOn(32);
+    for (volatile int i = 0; i < 10000; i++);
+    BuzzerOff();
+    BuzzerOn(64);
+    swDelay(2);
+    BuzzerOff();
+}
