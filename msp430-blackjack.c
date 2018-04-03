@@ -1,9 +1,10 @@
 #include "msp430-blackjack.h"
 
-const char* CardsLookup[] = {"  ", "CA", "C2", "C3", "C4", "C5", "C6", "C7", "C8", "C9", "CA", "CJ", "CQ", "CK", //CA instead of C10 because 1) consistency in sizing, and 2) hex.
-                       "DA", "D2", "D3", "D4", "D5", "D6", "D7", "D8", "D9", "DA", "DJ", "DQ", "DK",
-                       "HA", "H2", "H3", "H4", "H5", "H6", "H7", "H8", "H9", "HA", "HJ", "HQ", "HK",
-                       "SA", "S2", "S3", "S4", "S5", "S6", "S7", "S8", "S9", "SA", "SJ", "SQ", "SK",
+const char* CardsLookup[] = {"  ",
+                       "CA", "C2", "C3", "C4", "C5", "C6", "C7", "C8", "C9", "C0", "CJ", "CQ", "CK", //0=10
+                       "DA", "D2", "D3", "D4", "D5", "D6", "D7", "D8", "D9", "D0", "DJ", "DQ", "DK",
+                       "HA", "H2", "H3", "H4", "H5", "H6", "H7", "H8", "H9", "H0", "HJ", "HQ", "HK",
+                       "SA", "S2", "S3", "S4", "S5", "S6", "S7", "S8", "S9", "S0", "SJ", "SQ", "SK",
 };
 
 void blackjack(bool music){
@@ -56,7 +57,7 @@ void blackjack(bool music){
     //Shuffle deck by first arranging it in complete order, then performing swap
     Cards deck[52];
     for (int i = 1; i <= 52; i++)
-        deck[i] = i;
+        deck[i] = (Cards)i;
     { //No, this isn't an accident, I really do mean to create a new scope here! I don't want to waste any more RAM than I have to!
         Cards temp = NA;
         unsigned char loc1 = 0, loc2 = 0;
@@ -80,8 +81,8 @@ void blackjack(bool music){
         deck[i] = NA;
 
     unsigned char deckPos = 4; //keep track of what the next card to draw is
-    unsigned char playerCards = 2, mspCards = 2; //keep track of how many cards each player hsa
-    char res[50] = {'0'}; //generic buffer for use with printf
+    unsigned char playerCards = 2, mspCards = 2; //keep track of how many cards each player has
+    char res[50] = {'0'}; //generic buffer for use with sprintf
 
     //Main game loop
     unsigned char playerBet = 0;

@@ -1,11 +1,11 @@
 #include "msp430-tetris.h"
 
 void tetris(bool music){
-    Graphics_clearDisplay(&g_sContext);
-    Graphics_drawStringCentered(&g_sContext, "MSP430 TETRIS", AUTO_STRING_LENGTH, 48, 15, OPAQUE_TEXT);
-    Graphics_drawStringCentered(&g_sContext, "PORT BY C7C8", AUTO_STRING_LENGTH, 48, 30, OPAQUE_TEXT);
-    Graphics_drawStringCentered(&g_sContext, "PRESS * TO PLAY", AUTO_STRING_LENGTH, 48, 60, OPAQUE_TEXT);
-    Graphics_flushBuffer(&g_sContext);
+    CLRSCR;
+    WCENTR("MSP430 TETRIS", 15);
+    WCENTR("PORT BY C7C8", 30);
+    WCENTR("PRESS * TO PLAY", 60);
+    DRWSCR;
     while (getKey() != '*') {}
 
     unsigned char cKey = 'a';
@@ -42,26 +42,26 @@ void tetris(bool music){
             if (!tg_tick(tg, move))
                 break;
 
-            Graphics_clearDisplay(&g_sContext);
+            CLRSCR;
             tetris_displayBoard(tg);
 
             //Print stats on right side
             char res[10];
             sprintf(res, "S:%d", tg->points);
-            Graphics_drawStringCentered(&g_sContext, res, AUTO_STRING_LENGTH, 75, 5, OPAQUE_TEXT);
-            Graphics_flushBuffer(&g_sContext);
+            Graphics_drawStringCentered(&g_sContext, (uint8_t*)res, AUTO_STRING_LENGTH, 75, 5, OPAQUE_TEXT);;
+            DRWSCR;
             swDelay(1);
         }
         stopMusic();
 
         //Inform the player of their loss
-        Graphics_clearDisplay(&g_sContext);
-        Graphics_drawStringCentered(&g_sContext, "GAME OVER", AUTO_STRING_LENGTH, 48, 15, OPAQUE_TEXT);
+        CLRSCR;
+        WCENTR("GAME OVER", 15);
         sprintf(res, "SCORE: %d", tg->points);
-        Graphics_drawStringCentered(&g_sContext, res, AUTO_STRING_LENGTH, 48, 25, OPAQUE_TEXT);
-        Graphics_drawStringCentered(&g_sContext, "PLAY AGAIN? (*)", AUTO_STRING_LENGTH, 48, 50, OPAQUE_TEXT);
-        Graphics_drawStringCentered(&g_sContext, "RETURN? (#)", AUTO_STRING_LENGTH, 48, 58, OPAQUE_TEXT);
-        Graphics_flushBuffer(&g_sContext);
+        WCENTR(res, 25);
+        WCENTR("PLAY AGAIN? (*)", 50);
+        WCENTR("RETURN? (#)", 58);
+        DRWSCR;
         beepBad();
 
         char selection;
