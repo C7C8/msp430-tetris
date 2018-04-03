@@ -19,7 +19,7 @@ void tetris(bool music){
         //Main game loop
         tg = tg_create(tg, (char*) board, ROWS, COLUMNS);
         if (music)
-            playMusic(tetrisTheme, TETRIS_NOTE_COUNT);
+            playMusic(tetrisTheme, TETRIS_NOTE_COUNT, TETRIS_BPM);
         while (1){
             tetris_move move = TM_NONE;
             cKey = getKey();
