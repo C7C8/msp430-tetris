@@ -21,7 +21,7 @@ void main(void)
     configDisplay();
     configKeypad();
     configMusic();
-    bool musicEnabled = false;
+    bool musicEnabled = true;
     unsigned char selection = 0;
 
     while (true){

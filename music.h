@@ -118,9 +118,10 @@
 #define A8      7040
 #define A8S     7459
 #define B8      7902
+#define NONE    32770
 
 typedef struct {
-    unsigned char note;
+    unsigned int note;
     unsigned char length;
 } Note;
 
@@ -129,6 +130,6 @@ void playMusic(Note* music, unsigned int length, unsigned int bpm);
 void stopMusic();
 
 //Songs
-#define TETRIS_NOTE_COUNT 115
-#define TETRIS_BPM 135
+#define TETRIS_NOTE_COUNT 89
+#define TETRIS_SPEED 6
 extern Note tetrisTheme[TETRIS_NOTE_COUNT];
