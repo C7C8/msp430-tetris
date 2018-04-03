@@ -16,6 +16,8 @@ void blackjack(bool music){
     DRWSCR;
     while (getKey() != '*');
     beepStart();
+    if (music)
+        playMusic(starWarsTheme, STARWARS_NOTE_COUNT, STARWARS_SPEED);
 
     //Seed the random number generator/ "cut the deck"
     {
@@ -154,6 +156,7 @@ void blackjack(bool music){
         unsigned char mspFinalVal = getHandValue(mspHand);
         if (hold || playerFinalVal > 21 || mspFinalVal > 21)
         {
+            stopMusic();
             if (hold)
                 WCENTR("GAME OVER (HOLD)", 15);
             else
@@ -186,7 +189,6 @@ void blackjack(bool music){
             break;
         }
     }
-
     return;
 }
 

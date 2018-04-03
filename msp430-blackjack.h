@@ -7,6 +7,7 @@
 #include <time.h>
 #include <string.h>
 #include "common.h"
+#include "music.h"
 
 
 #define SHUFFLE_ROUNDS 150

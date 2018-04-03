@@ -130,6 +130,10 @@ void playMusic(Note* music, unsigned int length, unsigned int bpm);
 void stopMusic();
 
 //Songs
-#define TETRIS_NOTE_COUNT 89
+#define TETRIS_NOTE_COUNT 88
 #define TETRIS_SPEED 6
 extern Note tetrisTheme[TETRIS_NOTE_COUNT];
+
+#define STARWARS_NOTE_COUNT 74
+#define STARWARS_SPEED 100
+extern Note starWarsTheme[STARWARS_NOTE_COUNT];

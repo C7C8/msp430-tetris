@@ -14,10 +14,19 @@ Note tetrisTheme[TETRIS_NOTE_COUNT] = {{E5, E_NOTE},{B4, S_NOTE},{C5, S_NOTE},{D
                                        {E5, E_NOTE},{D5, S_NOTE},{C5, S_NOTE},{B4, E_NOTE},{B4, S_NOTE},{C5, S_NOTE},{D5, E_NOTE},
                                        {E5, E_NOTE},{C5, E_NOTE},{A4, E_NOTE},{A4, E_NOTE},{NONE, E_NOTE},
                                        {E4, Q_NOTE},{C4, Q_NOTE},{D4, Q_NOTE},{B3, Q_NOTE},{C4, Q_NOTE},{A3, Q_NOTE},{G3S, Q_NOTE},
-                                       {B3, Q_NOTE},{E4, Q_NOTE},{C4, Q_NOTE},{D4, Q_NOTE},{B3, Q_NOTE},{C4, E_NOTE},
+                                       {B3, Q_NOTE},{E4, Q_NOTE},{C4, Q_NOTE},{D4, Q_NOTE},
                                        {E4, Q_NOTE},{C4, Q_NOTE},{D4, Q_NOTE},{B3, Q_NOTE},{C4, Q_NOTE},{A3, Q_NOTE},{G3S, Q_NOTE},
                                        {B3, Q_NOTE},{E4, Q_NOTE},{C4, Q_NOTE},{D4, Q_NOTE},{B3, Q_NOTE},{C4, E_NOTE},{E4, E_NOTE},
                                        {A4, E_NOTE},{A4, E_NOTE},{G4S, Q_NOTE}, {NONE, Q_NOTE}};
+
+Note starWarsTheme[STARWARS_NOTE_COUNT] = {{A4, 50},{A4, 50}, {A4, 50},{F4, 35},{C5, 15},{A4, 50},{F4, 35},{C5, 15},{A4, 65},{NONE, 30},
+                                           {E5, 50},{E5, 50},{E5, 50},{F5, 35},{C5, 15},{G4S, 50},{F4, 35},{C5, 15},{A4, 65},{NONE, 30},
+                                           {A5, 50},{A4, 30},{A4, 15},{A5, 50},{G5S, 33},{G5, 18},{F5S, 13},{F5, 13},{F5S, 25},{NONE, 33},
+                                           {A4S, 25},{D5S, 50},{D5, 33},{C5S, 18},{C5, 13},{B4, 13},{C5, 25},{NONE, 35},{F4, 25},{G4S, 50},
+                                           {F4, 35},{A4, 13},{C5, 50},{A4, 38},{C5, 13},{E5, 65},{NONE, 30},{A5, 50},{A4, 30},{A4, 15},
+                                           {A5, 50},{G5S, 33},{G5, 18},{F5S, 13},{F5, 13},{F5S, 25},{NONE, 33},{A4S, 25},{D5S, 50},{D5, 33},
+                                           {C5S, 18},{C5, 13},{B4, 13},{C5, 25},{NONE, 35},{F4, 25},{G4S, 50},{F4, 38},{C5, 13},{A4, 50},
+                                           {F4, 38},{C5, 13},{A4, 65},{NONE, 50}};
 
 Note* cMusic = NULL;
 unsigned int cMusicLen = 0;
@@ -62,4 +71,5 @@ void playMusic(Note* music, unsigned int length, unsigned int speed){
 
 void stopMusic(){
     __disable_interrupt();
+    BuzzerOff();
 }
