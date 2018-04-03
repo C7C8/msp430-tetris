@@ -24,6 +24,7 @@ void main(void)
     bool musicEnabled = true;
     unsigned char selection = 0;
 
+    beepWelcome();
     while (true){
         //Draw game selection screen
         Graphics_clearDisplay(&g_sContext);
@@ -35,7 +36,6 @@ void main(void)
         else
             Graphics_drawString(&g_sContext, "MUSIC(#)?N", AUTO_STRING_LENGTH, 36, 87, true);
         Graphics_flushBuffer(&g_sContext);
-        beepWelcome();
 
         //Process menu selections
         while (true){
@@ -46,9 +46,11 @@ void main(void)
         switch (selection){
         case '1':
             tetris(musicEnabled);
+            beepWelcome();
             break;
         case '2':
             blackjack(musicEnabled);
+            beepWelcome();
             break;
         case '#':
             musicEnabled = !musicEnabled;
