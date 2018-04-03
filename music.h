@@ -1,7 +1,7 @@
 #pragma once
 
 void configMusic();
-void playMusic();
+void playMusic(unsigned char music[][], unsigned int length);
 void stopMusic();
 
 
