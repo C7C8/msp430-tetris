@@ -36,7 +36,7 @@ unsigned int cMusicLen = 0;
 __interrupt void TA0_ISR(){
     if (musicTick == 0) { //add a small delay between notes
         BuzzerOff();
-        for (volatile int i = 0; i < NOTE_GAP_LOOPS; i++);
+        DELAY_NOTE;
     }
     BuzzerOn(HZTOB(cMusic[musicPos].note)); //Apply some transformations to get this into BuzzerOn() format
 

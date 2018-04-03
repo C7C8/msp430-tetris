@@ -2,6 +2,7 @@
 #include <msp430.h>
 #include <stdlib.h>
 #include "peripherals.h"
+#include "common.h"
 
 //Musical constants
 #define W_NOTE 16

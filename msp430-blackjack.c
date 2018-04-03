@@ -28,7 +28,7 @@ void blackjack(bool music){
         while (true){
             WCENTR("CUT THE DECK", 5);
             WCENTR("ENTER NUMBER", 13);
-            WCENTR("1-5, * TO FINISH", 21);
+            WCENTR("* TO FINISH", 21);
             WCENTR(input, 29);
             DRWSCR;
 
